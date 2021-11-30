@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/the_loai"
+        android:icon="@drawable/ic_theloai"
+        android:title="Thể loại"/>
+
+    <item
+        android:id="@+id/kham_pha"
+        android:icon="@drawable/ic_kham_pha"
+        android:title="Khám phá" />
+
+    <item
+        android:id="@+id/tim_kiem"
+        android:icon="@drawable/ic_tim_kiem"
+        android:title="Tìm kiếm"/>
+
+    <item
+        android:id="@+id/thu_vien"
+        android:icon="@drawable/ic_thu_vien"
+        android:title="Thư viện"/>
+</menu>
