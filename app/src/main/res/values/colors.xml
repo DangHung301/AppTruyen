@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bgr_splash">#FEF1E6</color>
     <color name="background">#212121</color>
+    <color name="while_smoke">#F6F6F6</color>
+    <color name="green_cyan">#6D9886</color>
+    <color name="stark_while">#D9CAB3</color>
 </resources>
