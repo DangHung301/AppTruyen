@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.apptruyen.data.TruyenHot
 import com.example.apptruyen.ui.fragment.KhamPha
 import com.example.apptruyen.ui.fragment.TheLoai
 import com.example.apptruyen.ui.fragment.ThuVien
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val txtAppBar : TextView = findViewById(R.id.title_appbar)
         var navigation : BottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        var test : TruyenHot = TruyenHot()
+
+        test.uploadTruyen()
+
+        println(test.listTruyen)
 
         navigation.setOnItemSelectedListener{ item ->
             val fragment : Fragment

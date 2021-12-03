@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Truyện hot"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textFontWeight="500"
