@@ -1,13 +1,18 @@
 package com.example.apptruyen.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apptruyen.R
 import com.example.apptruyen.model.Truyen
 
-class AdapterTheLoai(var listTruyen : MutableList<Truyen>) : RecyclerView.Adapter<ViewHolder>() {
+class AdapterTheLoai(var listTruyen: MutableList<Truyen>) : RecyclerView.Adapter<ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         TODO("Not yet implemented")
+
+//        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.id))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -15,7 +20,7 @@ class AdapterTheLoai(var listTruyen : MutableList<Truyen>) : RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return this.listTruyen.size
     }
 
 }

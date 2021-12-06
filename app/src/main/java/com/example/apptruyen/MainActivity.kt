@@ -11,7 +11,13 @@ import com.example.apptruyen.ui.fragment.TheLoai
 import com.example.apptruyen.ui.fragment.ThuVien
 import com.example.apptruyen.ui.fragment.TimKiem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.math.log
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,12 +26,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val txtAppBar : TextView = findViewById(R.id.title_appbar)
         var navigation : BottomNavigationView = findViewById(R.id.bottom_navigation)
+        var test = TruyenHot()
 
-        var test : TruyenHot = TruyenHot()
+        GlobalScope.launch(Dispatchers.IO) {
+            test.uploadTruyen()
+            println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${test.listTruyen.size}")
+        }
 
-        test.uploadTruyen()
-
-        println(test.listTruyen)
+        test.listTruyen.forEach { println(it) }
 
         navigation.setOnItemSelectedListener{ item ->
             val fragment : Fragment

@@ -2,6 +2,7 @@ package com.example.apptruyen.data
 import com.example.apptruyen.helper.const.URL
 import com.example.apptruyen.model.Status
 import com.example.apptruyen.model.Truyen
+import io.reactivex.rxjava3.core.Observable
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -11,10 +12,10 @@ import java.io.IOException
 class TruyenHot {
     var url: String = URL.url_truyen_hot
     var listTruyen: MutableList<Truyen> = mutableListOf()
-    var document: Document = Jsoup.connect(url).get()
 
     fun uploadTruyen() {
         try {
+            var document: Document = Jsoup.connect(url).get()
             var element: Elements = document.select("div.row")
 
             for (i : Element in element) {
