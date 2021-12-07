@@ -12,10 +12,10 @@ import java.io.IOException
 class TruyenHot {
     var url: String = URL.url_truyen_hot
     var listTruyen: MutableList<Truyen> = mutableListOf()
+    var document: Document = Jsoup.connect(url).get()
 
     fun uploadTruyen() {
         try {
-            var document: Document = Jsoup.connect(url).get()
             var element: Elements = document.select("div.row")
 
             for (i : Element in element) {

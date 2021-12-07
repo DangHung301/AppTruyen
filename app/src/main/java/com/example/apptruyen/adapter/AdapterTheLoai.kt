@@ -22,7 +22,6 @@ class AdapterTheLoai(var listTruyen: MutableList<Truyen>) : RecyclerView.Adapter
     override fun getItemCount(): Int {
         return this.listTruyen.size
     }
-
 }
 
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

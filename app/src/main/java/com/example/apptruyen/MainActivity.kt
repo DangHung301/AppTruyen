@@ -6,17 +6,20 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.apptruyen.data.TruyenHot
+import com.example.apptruyen.model.Truyen
 import com.example.apptruyen.ui.fragment.KhamPha
 import com.example.apptruyen.ui.fragment.TheLoai
 import com.example.apptruyen.ui.fragment.ThuVien
 import com.example.apptruyen.ui.fragment.TimKiem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.rxjava3.core.Observable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.*
 import kotlin.math.log
+import io.reactivex.rxjava3.core.Observer as Observer
+import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,19 +27,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val txtAppBar : TextView = findViewById(R.id.title_appbar)
-        var navigation : BottomNavigationView = findViewById(R.id.bottom_navigation)
-        var test = TruyenHot()
+        val txtAppBar: TextView = findViewById(R.id.title_appbar)
+        var navigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
-        GlobalScope.launch(Dispatchers.IO) {
-            test.uploadTruyen()
-            println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${test.listTruyen.size}")
+//        val notesObservable: Observable<Truyen> = getTHotObservable()
+//
+//        val notesObserver: Observer<Truyen> = getThotobserver()
+//
+//        notesObservable.observeOn(Schedulers.io())
+//            .subscribeWith(notesObserver)
+
+        getTHotObservable().subscribeOn(Schedulers.io()).subscribe {
+            getThotobserver()
         }
 
-        test.listTruyen.forEach { println(it) }
-
-        navigation.setOnItemSelectedListener{ item ->
-            val fragment : Fragment
+        navigation.setOnItemSelectedListener { item ->
+            val fragment: Fragment
 
             when (item.itemId) {
                 R.id.the_loai -> {
@@ -68,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     fragment = ThuVien()
                     txtAppBar.setText("Thư viện")
                     openFragment(fragment)
-                  true
+                    true
 
                 }
 
@@ -82,8 +88,50 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getThotobserver(): Observer<Truyen> = object : Observer<Truyen> {
+        override fun onSubscribe(d: Disposable?) {
+            println("Subscribed to $d")
+        }
+
+        override fun onError(e: Throwable?) {
+            println("Error Occured $e")
+        }
+
+        override fun onComplete() {
+            println("All Completed")
+        }
+
+        override fun onNext(t: Truyen?) {
+            TODO("Not yet implemented")
+            println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+            println(t)
+        }
+    }
+
+    private fun getTHotObservable(): Observable<Truyen> {
+        val listTruyen = getListTruyen()
+
+        return Observable.create(ObservableOnSubscribe {
+            for (truyen in listTruyen) {
+                if (!it.isDisposed)
+                    it.onNext(truyen)
+            }
+
+            if (it.isDisposed)
+                it.onComplete()
+        })
+    }
+
+    private fun getListTruyen(): List<Truyen> {
+        var truyen = TruyenHot()
+
+        truyen.uploadTruyen()
+
+        return truyen.listTruyen
+    }
+
     private fun openFragment(fragment: Fragment) {
-        val transaction : FragmentTransaction = supportFragmentManager.beginTransaction();
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction();
         transaction.replace(R.id.frame_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
