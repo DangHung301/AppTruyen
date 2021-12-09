@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.data.TruyenHot
 import com.example.apptruyen.model.Truyen
 import com.example.apptruyen.ui.fragment.KhamPha
@@ -15,11 +16,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.kotlin.toObservable
 import java.util.*
 import kotlin.math.log
 import io.reactivex.rxjava3.core.Observer as Observer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.*
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,17 +32,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val txtAppBar: TextView = findViewById(R.id.title_appbar)
         var navigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-
-//        val notesObservable: Observable<Truyen> = getTHotObservable()
-//
-//        val notesObserver: Observer<Truyen> = getThotobserver()
-//
-//        notesObservable.observeOn(Schedulers.io())
-//            .subscribeWith(notesObserver)
-
-        getTHotObservable().subscribeOn(Schedulers.io()).subscribe {
-            getThotobserver()
-        }
 
         navigation.setOnItemSelectedListener { item ->
             val fragment: Fragment
@@ -57,7 +49,6 @@ class MainActivity : AppCompatActivity() {
                     txtAppBar.setText("Khám phá")
                     openFragment(fragment)
                     true
-
                 }
 
                 R.id.tim_kiem -> {
@@ -66,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                     txtAppBar.setText("Tìm kiếm")
                     openFragment(fragment)
                     true
-
                 }
 
                 R.id.thu_vien -> {
@@ -75,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                     txtAppBar.setText("Thư viện")
                     openFragment(fragment)
                     true
-
                 }
 
                 else -> {
@@ -112,8 +101,9 @@ class MainActivity : AppCompatActivity() {
         val listTruyen = getListTruyen()
 
         return Observable.create(ObservableOnSubscribe {
+
             for (truyen in listTruyen) {
-                if (!it.isDisposed)
+//                if (!it.isDisposed)
                     it.onNext(truyen)
             }
 

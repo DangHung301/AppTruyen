@@ -3,20 +3,26 @@ package com.example.apptruyen.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.R
 import com.example.apptruyen.model.Truyen
+import com.squareup.picasso.Picasso
 
-class AdapterTheLoai(var listTruyen: MutableList<Truyen>) : RecyclerView.Adapter<ViewHolder>() {
+class AdapterTheLoai(var listTruyen: List<Truyen>) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
 
-//        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.id))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_column_truyen, parent,false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val item = this.listTruyen[position]
+        println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        println(item.image)
+        Picasso.get().load(item.image).into(holder.imageView)
+        holder.txtView.setText(item.name)
     }
 
     override fun getItemCount(): Int {
@@ -25,5 +31,6 @@ class AdapterTheLoai(var listTruyen: MutableList<Truyen>) : RecyclerView.Adapter
 }
 
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-
+    val imageView : ImageView = itemView.findViewById(R.id.column_img_truyen)
+    val txtView : TextView = itemView.findViewById(R.id.column_txt)
 }
