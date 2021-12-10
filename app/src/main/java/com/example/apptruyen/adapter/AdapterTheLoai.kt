@@ -3,34 +3,25 @@ package com.example.apptruyen.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.R
-import com.example.apptruyen.model.Truyen
-import com.squareup.picasso.Picasso
 
-class AdapterTheLoai(var listTruyen: List<Truyen>) : RecyclerView.Adapter<ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_column_truyen, parent,false))
+class AdapterTheLoai(val listTheLoai : MutableList<String>) : RecyclerView.Adapter<ViewHolderTheLoai>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTheLoai {
+        return ViewHolderTheLoai(LayoutInflater.from(parent.context).inflate(R.layout.item_the_loai, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = this.listTruyen[position]
-        println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        println(item.image)
-        Picasso.get().load(item.image).into(holder.imageView)
-        holder.txtView.setText(item.name)
+    override fun onBindViewHolder(holder: ViewHolderTheLoai, position: Int) {
+        var item = listTheLoai[position]
+        holder.txtTheLoai.text = item
     }
 
     override fun getItemCount(): Int {
-        return this.listTruyen.size
+        return this.listTheLoai.size
     }
 }
 
-class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-    val imageView : ImageView = itemView.findViewById(R.id.column_img_truyen)
-    val txtView : TextView = itemView.findViewById(R.id.column_txt)
+class ViewHolderTheLoai(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var txtTheLoai : TextView = itemView.findViewById(R.id.txt_theloai)
 }

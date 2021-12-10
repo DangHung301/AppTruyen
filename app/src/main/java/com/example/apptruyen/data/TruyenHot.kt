@@ -2,20 +2,46 @@ package com.example.apptruyen.data
 
 import com.example.apptruyen.helper.const.URL
 import com.example.apptruyen.model.Status
-import com.example.apptruyen.model.Truyen
-import io.reactivex.rxjava3.core.Observable
+import com.example.apptruyen.model.data.Truyen
+import com.example.apptruyen.model.data.TruyenHome
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
-import kotlin.concurrent.thread
 
 class TruyenHot {
     var url: String = URL.url_truyen_hot
-    var listTruyen: MutableList<Truyen> = mutableListOf()
+    val urlHome: String = URL.url_home
+    var listTruyenHot: MutableList<Truyen> = mutableListOf()
+    var listTruyenHotHome : MutableList<TruyenHome> = mutableListOf()
 
-    fun uploadTruyen() {
+    fun uploadTruyenHotKhamPha() {
+        try {
+            var document: Document = Jsoup.connect(urlHome).get()
+            var elements: Elements = document.select("div.index-intro")
+
+            for (i in 1..16) {
+                val image : String
+                val name : String = elements.select("div.item.top-$i").text()
+                if (!elements.select("div.item.top-$i img.img-responsive.item-img").attr("lazysrc").isEmpty()) {
+                   image = elements.select("div.item.top-$i img.img-responsive.item-img").attr("lazysrc")
+                } else {
+                   image = elements.select("div.item.top-$i img.img-responsive.item-img").attr("src")
+                }
+
+                val truyen = TruyenHome(image, name)
+
+                this.listTruyenHotHome.add(truyen)
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
+    fun uploadTruyenHot() {
 
         try {
             var document: Document = Jsoup.connect(url).get()
@@ -37,7 +63,7 @@ class TruyenHot {
                 )
 
                 val truyen = Truyen(image, name, author, chapter, isFull, isHot, isNews)
-                listTruyen.add(truyen)
+                listTruyenHot.add(truyen)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -47,12 +73,13 @@ class TruyenHot {
 
     fun removeEmpty() {
         val removeList = ArrayList<Truyen>()
-        this.listTruyen.forEach {
-            if(it.image.isEmpty()) {
+        this.listTruyenHot.forEach {
+            if (it.image.isEmpty()) {
                 removeList.add(it)
             }
         }
 
-        this.listTruyen.removeAll(removeList)
+        this.listTruyenHot.removeAll(removeList)
+        removeList.clear()
     }
 }

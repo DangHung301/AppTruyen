@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Thể loại"
         android:textSize="20dp"
-        android:textColor="@color/white"
+        android:textColor="#6D9886"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

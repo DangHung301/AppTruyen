@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.data.TruyenHot
-import com.example.apptruyen.model.Truyen
+import com.example.apptruyen.model.data.Truyen
+import com.example.apptruyen.model.data.TruyenHome
 import com.example.apptruyen.ui.fragment.KhamPha
 import com.example.apptruyen.ui.fragment.TheLoai
 import com.example.apptruyen.ui.fragment.ThuVien
@@ -16,13 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.kotlin.toObservable
-import java.util.*
-import kotlin.math.log
 import io.reactivex.rxjava3.core.Observer as Observer
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.*
-import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
@@ -97,27 +91,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getTHotObservable(): Observable<Truyen> {
+    private fun getTHotObservable(): Observable<TruyenHome> {
         val listTruyen = getListTruyen()
 
         return Observable.create(ObservableOnSubscribe {
 
             for (truyen in listTruyen) {
 //                if (!it.isDisposed)
-                    it.onNext(truyen)
+                it.onNext(truyen)
             }
 
-            if (it.isDisposed)
-                it.onComplete()
+            it.onComplete()
         })
     }
 
-    private fun getListTruyen(): List<Truyen> {
+    private fun getListTruyen(): List<TruyenHome> {
         var truyen = TruyenHot()
 
-        truyen.uploadTruyen()
+        truyen.uploadTruyenHotKhamPha()
 
-        return truyen.listTruyen
+        return truyen.listTruyenHotHome
     }
 
     private fun openFragment(fragment: Fragment) {

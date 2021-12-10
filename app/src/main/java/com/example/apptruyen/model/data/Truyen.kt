@@ -1,4 +1,4 @@
-package com.example.apptruyen.model
+package com.example.apptruyen.model.data
 
 data class Truyen(
     var image: String,
