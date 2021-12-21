@@ -44,9 +44,9 @@ class TheLoai : Fragment() {
             var theLoai = TheLoai()
             theLoai.uploadTheLoai()
 
-            val adapter = AdapterTheLoai(theLoai.listTheLoai)
-
             withContext(Dispatchers.Main) {
+                val adapter = AdapterTheLoai(theLoai.listTheLoai)
+                adapter.notifyDataSetChanged()
                 rvTheLoai.adapter = adapter
             }
         }

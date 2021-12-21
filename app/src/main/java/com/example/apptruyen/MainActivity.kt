@@ -27,20 +27,24 @@ class MainActivity : AppCompatActivity() {
         val txtAppBar: TextView = findViewById(R.id.title_appbar)
         var navigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
+        openFragment(TheLoai())
+
+        runOnUiThread {  }
+
         navigation.setOnItemSelectedListener { item ->
             val fragment: Fragment
 
             when (item.itemId) {
                 R.id.the_loai -> {
                     fragment = TheLoai()
-                    txtAppBar.setText("Thể loại")
+                    txtAppBar.text = "Thể loại"
                     openFragment(fragment)
                     true
                 }
 
                 R.id.kham_pha -> {
                     fragment = KhamPha()
-                    txtAppBar.setText("Khám phá")
+                    txtAppBar.text = "Khám phá"
                     openFragment(fragment)
                     true
                 }
@@ -48,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.tim_kiem -> {
                     println(item.itemId)
                     fragment = TimKiem()
-                    txtAppBar.setText("Tìm kiếm")
+                    txtAppBar.text = "Tìm kiếm"
                     openFragment(fragment)
                     true
                 }
@@ -56,14 +60,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.thu_vien -> {
                     println(item.itemId)
                     fragment = ThuVien()
-                    txtAppBar.setText("Thư viện")
+                    txtAppBar.text = "Thư viện"
                     openFragment(fragment)
                     true
                 }
 
                 else -> {
                     fragment = TheLoai()
-                    txtAppBar.setText("Thể loại")
+                    txtAppBar.text = "Thể loại"
                     openFragment(fragment)
                     true
                 }

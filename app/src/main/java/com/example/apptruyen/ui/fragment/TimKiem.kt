@@ -5,29 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.R
+import com.example.apptruyen.adapter.AdapterTimKiem
+import com.example.apptruyen.data.TimKiem
+import com.example.apptruyen.model.data.Truyen
+import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.*
+import java.util.logging.Handler
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TimKiem.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TimKiem : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    lateinit var viewPlay: View
+    lateinit var adapterTimKiem: AdapterTimKiem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -35,26 +31,91 @@ class TimKiem : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tim_kiem, container, false)
-    }
+        viewPlay = inflater.inflate(R.layout.fragment_tim_kiem, container, false)
+        var rvTimKiem: RecyclerView = viewPlay.findViewById(R.id.rv_timKiem)
+        var listTruyen: MutableList<Truyen> = mutableListOf()
+        var txtEmpty: TextView = viewPlay.findViewById(R.id.txt_empty)
+        var searchView: SearchView = viewPlay.findViewById(R.id.search_bar)
+        var keyWord: String? = ""
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TimKiem.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TimKiem().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        adapterTimKiem = AdapterTimKiem()
+
+        rvTimKiem.setHasFixedSize(true)
+        rvTimKiem.layoutManager = LinearLayoutManager(context)
+        rvTimKiem.adapter = adapterTimKiem
+
+        val handler = android.os.Handler()
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                println("????????????????????????????????")
+                println(query)
+                return false
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    handler.postDelayed(Runnable {
+                        kotlin.run {
+                            GlobalScope.launch {
+                                var timKiem = TimKiem()
+                                timKiem.searchTruyen(newText)
+
+                                listTruyen.clear()
+                                if (timKiem.listTruyen.isNotEmpty())
+                                    listTruyen = timKiem.listTruyen
+
+                                for(i in 0 until listTruyen.size) {
+                                    println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i ??????? ${listTruyen[i].toString()}")
+                                }
+
+                                withContext(Dispatchers.Main) {
+                                    if (listTruyen.isEmpty()) {
+                                        txtEmpty.visibility = View.VISIBLE
+                                        rvTimKiem.visibility = View.GONE
+                                    } else {
+                                        txtEmpty.visibility = View.GONE
+                                        rvTimKiem.visibility = View.VISIBLE
+                                        adapterTimKiem.setData(listTruyen)
+                                    }
+                                }
+                            }
+                        }
+                    }, 2000)
+                }
+                return false
+            }
+
+        })
+
+//        GlobalScope.launch {
+//            var timKiem = TimKiem()
+//            timKiem.searchTruyen("dau pha thuong khung")
+//            timKiem.removeEmpty()
+//
+////            timKiem.listTruyen.forEach {
+////                println(it.toString())
+////            }
+//            delay(1000)
+//            listTruyen.clear()
+//            listTruyen = timKiem.listTruyen
+//            adapterTimKiem = AdapterTimKiem(listTruyen)
+//
+//            withContext(Dispatchers.Main) {
+//                if (listTruyen.isEmpty()) {
+//                    txtEmpty.visibility = View.VISIBLE
+//                    rvTimKiem.visibility = View.GONE
+//
+//                    println("1111111111111111111111111111111111111111111111111")
+//                } else {
+//                    txtEmpty.visibility = View.GONE
+//                    rvTimKiem.visibility = View.VISIBLE
+//                    rvTimKiem.adapter = adapterTimKiem
+//
+//                    println("2222222222222222222222222222222222222222222222222222222222222222")
+//                }
+//            }
+//        }
+        return viewPlay
     }
 }

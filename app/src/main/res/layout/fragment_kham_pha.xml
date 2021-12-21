@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Truyện hot"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="#6D9886"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,22 +29,35 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_truyenhot"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_xemtiepth"
             tools:listitem="@layout/item_column_truyen"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"/>
+
+        <Button
+            android:id="@+id/btn_xemtiepth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:text="Xem Tiếp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/rv_truyen_hot"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/txt_truyendahoanthanh"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/txt_truyendahoanthanh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/rv_truyen_hot"
+            app:layout_constraintTop_toBottomOf="@id/btn_xemtiepth"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:text="Truyện đã hoàn thành"
             android:textColor="#6D9886"
             android:textStyle="bold"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_truyen_ht"
@@ -54,6 +67,18 @@
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/btn_xemtieptht"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:text="Xem Tiếp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/rv_truyen_ht"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
