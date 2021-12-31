@@ -1,14 +1,15 @@
 package com.example.apptruyen.data
 
 import com.example.apptruyen.helper.const.URL
+import com.example.apptruyen.model.data.TheLoai
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import java.lang.Exception
 
-class TheLoai {
+class DataTheLoai {
     val url : String = URL.url_home
-    var listTheLoai : MutableList<String> = mutableListOf()
+    var listTheLoai : MutableList<TheLoai> = mutableListOf()
 
     fun uploadTheLoai() {
         try {
@@ -16,7 +17,9 @@ class TheLoai {
             var element : Elements =  document.select("div.col-xs-6");
 
             for(i in element) {
-                val theLoai = i.select("a").attr("title")
+                val nameTheLoai = i.select("a").attr("title")
+                val urlTheLoai = i.select("a").attr("href")
+                val theLoai = TheLoai(urlTheLoai, nameTheLoai)
                 listTheLoai.add(theLoai)
             }
         }catch (e : Exception) {

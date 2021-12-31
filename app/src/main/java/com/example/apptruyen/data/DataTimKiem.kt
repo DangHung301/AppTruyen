@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
 
-class TimKiem {
+class DataTimKiem {
 
     var listTruyen: MutableList<Truyen> = mutableListOf()
 

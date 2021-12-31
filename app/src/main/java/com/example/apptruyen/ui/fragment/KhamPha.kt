@@ -1,29 +1,19 @@
 package com.example.apptruyen.ui.fragment
 
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.R
-import com.example.apptruyen.adapter.AdapterTheLoai
 import com.example.apptruyen.adapter.AdapterTruyenHoanThanh
-import com.example.apptruyen.data.TruyenHoanThanh
-import com.example.apptruyen.data.TruyenHot
-import com.example.apptruyen.model.data.Truyen
+import com.example.apptruyen.data.DataTruyenHoanThanh
+import com.example.apptruyen.data.DataTruyenHot
 import com.example.apptruyen.model.data.TruyenHome
-import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.*
-import java.lang.Math.log
-import kotlin.concurrent.thread
 
 class KhamPha : Fragment() {
     lateinit var viewPlay: View
@@ -56,7 +46,7 @@ class KhamPha : Fragment() {
         rvTruyenHoanThanh.layoutManager = GridLayoutManager(this.context, 3)
 
         GlobalScope.launch() {
-            var truyenHot = TruyenHot()
+            var truyenHot = DataTruyenHot()
             truyenHot.uploadTruyenHotKhamPha()
 
             listTruyenHot.addAll(truyenHot.listTruyenHotHome)
@@ -89,7 +79,7 @@ class KhamPha : Fragment() {
         var btn_xemthemht : Button = viewPlay.findViewById(R.id.btn_xemtieptht)
 
         GlobalScope.launch {
-            var truyenHoanThanh = TruyenHoanThanh()
+            var truyenHoanThanh = DataTruyenHoanThanh()
             truyenHoanThanh.uploadTruyenHoanThanh()
 
             listTruyenHoanThanh.addAll(truyenHoanThanh.listTruyenHoanThanh)

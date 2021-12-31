@@ -7,16 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.R
 import com.example.apptruyen.adapter.AdapterTimKiem
-import com.example.apptruyen.data.TimKiem
+import com.example.apptruyen.data.DataTimKiem
 import com.example.apptruyen.model.data.Truyen
-import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.*
-import java.util.logging.Handler
 
 class TimKiem : Fragment() {
     lateinit var viewPlay: View
@@ -58,7 +55,7 @@ class TimKiem : Fragment() {
                     handler.postDelayed(Runnable {
                         kotlin.run {
                             GlobalScope.launch {
-                                var timKiem = TimKiem()
+                                var timKiem = DataTimKiem()
                                 timKiem.searchTruyen(newText)
 
                                 listTruyen.clear()

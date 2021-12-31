@@ -1,25 +1,20 @@
 package com.example.apptruyen.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptruyen.R
 import com.example.apptruyen.adapter.AdapterTheLoai
-import com.example.apptruyen.data.TheLoai
+import com.example.apptruyen.data.DataTheLoai
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.security.auth.Destroyable
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.test.core.app.ApplicationProvider
 
 
 class TheLoai : Fragment() {
@@ -41,11 +36,11 @@ class TheLoai : Fragment() {
         rvTheLoai.layoutManager = GridLayoutManager(context, 2)
 
         GlobalScope.launch {
-            var theLoai = TheLoai()
+            var theLoai = DataTheLoai()
             theLoai.uploadTheLoai()
 
             withContext(Dispatchers.Main) {
-                val adapter = AdapterTheLoai(theLoai.listTheLoai)
+                val adapter = AdapterTheLoai(theLoai.listTheLoai, viewPlay.context)
                 adapter.notifyDataSetChanged()
                 rvTheLoai.adapter = adapter
             }

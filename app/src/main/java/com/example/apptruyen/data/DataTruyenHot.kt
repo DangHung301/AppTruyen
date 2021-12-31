@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
 
-class TruyenHot {
+class DataTruyenHot {
     var url: String = URL.url_truyen_hot
     val urlHome: String = URL.url_home
     var listTruyenHotHome : MutableList<TruyenHome> = mutableListOf()

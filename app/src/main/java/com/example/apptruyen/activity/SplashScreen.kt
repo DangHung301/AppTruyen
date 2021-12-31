@@ -1,10 +1,9 @@
-package com.example.apptruyen
+package com.example.apptruyen.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
-
-
+import com.example.apptruyen.MainActivity
 
 
 class SplashScreen : AppCompatActivity() {

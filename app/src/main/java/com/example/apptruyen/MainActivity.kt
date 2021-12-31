@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.apptruyen.data.TruyenHot
+import com.example.apptruyen.data.DataTruyenHot
 import com.example.apptruyen.model.data.Truyen
 import com.example.apptruyen.model.data.TruyenHome
 import com.example.apptruyen.ui.fragment.KhamPha
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getListTruyen(): List<TruyenHome> {
-        var truyen = TruyenHot()
+        var truyen = DataTruyenHot()
 
         truyen.uploadTruyenHotKhamPha()
 

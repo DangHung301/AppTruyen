@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import java.io.IOException
 
-class TruyenHoanThanh {
+class DataTruyenHoanThanh {
     val url : String = URL.url_home
     var listTruyenHoanThanh : MutableList<TruyenHome> = mutableListOf()
 
